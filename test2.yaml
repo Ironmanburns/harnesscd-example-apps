@@ -1,0 +1,36 @@
+template:
+  name: test
+  type: Pipeline
+  spec:
+    properties:
+      ci:
+        codebase:
+          build: <+input>
+          connectorRef: account.Github
+          repoName: Ironmanburns/harnesscd-example-apps
+    stages:
+      - stage:
+          identifier: build
+          name: build
+          spec:
+            cloneCodebase: true
+            execution:
+              steps:
+                - step:
+                    identifier: echo
+                    name: echo
+                    spec:
+                      command: echo hello world
+                    timeout: ""
+                    type: Run
+            platform:
+              os: Linux
+              arch: Amd64
+            runtime:
+              type: Docker
+              spec: {}
+          type: CI
+          delegateSelectors:
+            - terraform-delegate
+  versionLabel: 1.0.1
+  identifier: test
