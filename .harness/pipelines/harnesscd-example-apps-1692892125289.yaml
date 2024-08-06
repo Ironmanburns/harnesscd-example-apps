@@ -21,15 +21,20 @@ pipeline:
                   identifier: echo
                   name: echo
                   spec:
+                    connectorRef: account.harnessImage
+                    image: hello-world:linux
+                    shell: Sh
                     command: echo hello world
                   timeout: ""
                   type: Run
-          platform:
-            os: Linux
-            arch: Amd64
-          runtime:
-            type: Docker
-            spec: {}
+          infrastructure:
+            type: KubernetesDirect
+            spec:
+              connectorRef: account.Mac_cluster
+              namespace: harness-namespace-ng
+              automountServiceAccountToken: true
+              nodeSelector: {}
+              os: Linux
         type: CI
         delegateSelectors:
           - terraform-delegate
